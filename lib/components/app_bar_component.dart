@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meu_correios/services/rastreio.dart';
 
 class AppBarComponent extends StatefulWidget implements PreferredSizeWidget {
   String textTitle;
@@ -126,7 +127,7 @@ class _AppBarComponentState extends State<AppBarComponent> with SingleTickerProv
         IconButton(
           icon: Icon(Icons.refresh),
           onPressed: () => setState (() {
-            //
+            new Rastreio("").teste();
           }),
         ),
       ],
