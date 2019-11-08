@@ -36,6 +36,8 @@ class DBHelper {
   }
 
   Future _onCreate(Database db, int version) async {
-    //await db.execute();
+    await db.execute(
+      "CREATE TABLE Package (codigo TEXT NOT NULL, servico TEXT NULL)"
+    );
   }
 }
