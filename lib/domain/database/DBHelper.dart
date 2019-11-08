@@ -16,7 +16,7 @@ class DBHelper {
   static final _databaseVersion = 1;
   
   DBHelper._privateConstructor();
-  static final DBHelper instance = DBHelper._privateConstructor();
+  static final DBHelper getInstance = DBHelper._privateConstructor();
 
   static Database _database;
 
@@ -37,5 +37,5 @@ class DBHelper {
 
   Future _onCreate(Database db, int version) async {
     //await db.execute();
-  }  
+  }
 }
