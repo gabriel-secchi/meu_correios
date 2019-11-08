@@ -8,7 +8,7 @@ abstract class CustomDAO<T> {
   
   Future<int> insert(T obj) async {
     Database db = await DBHelper.getInstance.database;
-    //return await db.insert(getTableName(), obj.toMap());
+    return await db.insert(getTableName(), (obj as IMapper).toMap());
   }
 
 }
