@@ -127,7 +127,7 @@ class _AppBarComponentState extends State<AppBarComponent> with SingleTickerProv
         IconButton(
           icon: Icon(Icons.refresh),
           onPressed: () => setState (() {
-            new Rastreio("").teste();
+            Rastreio.rastrearUm("");
           }),
         ),
       ],

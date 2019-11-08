@@ -1,20 +1,14 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class Rastreio {
 
-  final String urlRastreio = "https://api.postmon.com.br/v1/rastreio/ect/";
-  final String codRastreio;
-
-  Rastreio(
-    @required this.codRastreio
-  );
-
-  teste() async {
+  static final String urlRastreio = "https://api.postmon.com.br/v1/rastreio/ect/";
+  
+  static rastrearUm(String codRastreio) async {
     String asd = "JN252931930BR";
-    final response = await http.get( this.urlRastreio + asd );
+    final response = await http.get( Rastreio.urlRastreio + asd );
 
     if (response.statusCode == 200) {
       // If server returns an OK response, parse the JSON.
@@ -25,7 +19,6 @@ class Rastreio {
       // If that response was not OK, throw an error.
       throw Exception('Failed to load post');
     }
-    
   }
 
 }
