@@ -2,7 +2,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:meu_correios/components/addPackage.dart';
 import 'package:meu_correios/components/app_bar_component.dart';
+import 'package:meu_correios/services/customSnackBar.dart';
 
 void main() => runApp(MyApp());
 
@@ -30,10 +32,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 
-
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
-  int _count = 0;
-  
+    
   onFilterChange(String asd) {
     setState(() {
       log(asd);
@@ -63,17 +63,25 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               Icon(Icons.directions_car),
               Icon(Icons.directions_transit),
               Scaffold(
-                body: Center (child: Text("teste gabriel num: $_count"),),
-                floatingActionButton: FloatingActionButton(
-                  onPressed: () => setState(() {
-                    _count++;
-                  }),
-                  tooltip: 'Increment Counter',
-                  child: Icon(Icons.add),
-                ),
+                body: Center (child: Text("teste gabriel "),),
               )
             ],
           ),
+
+          floatingActionButton: new Builder(
+            builder: (BuildContext ctxActionButtom) {
+              return new FloatingActionButton(
+                tooltip: "Adicionar encomenta",
+                child: Icon(Icons.add),
+                onPressed: ()   => setState(() {
+                  AddPackage.dialog(ctxActionButtom);
+                  //CustomSnackBar.showSuccess(ctxActionButtom, "teste");
+                }),
+              );
+            },
+          ),
+          
+            
         ),
       ),
     );

@@ -9,4 +9,8 @@ class PackageDAO extends CustomDAO<Package> {
     return this._table;
   }
 
+  static CustomDAO getInstance() {
+    return new PackageDAO();
+  }
+
 }

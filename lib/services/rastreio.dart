@@ -1,31 +1,45 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:meu_correios/domain/dao/Package.DAO.dart';
 import 'package:meu_correios/domain/models/Package.dart';
+import 'package:meu_correios/services/customSnackBar.dart';
 
 class Rastreio {
 
   static final String urlRastreio = "https://api.postmon.com.br/v1/rastreio/ect/";
   
-  static rastrearUm(String codRastreio) async {
-    String asd = "JN252931930BR";
-    final response = await http.get( Rastreio.urlRastreio + asd );
+  static rastrearUm( final BuildContext context, final String codRastreio ) async {
 
-    if (response.statusCode == 200) {
-      // If server returns an OK response, parse the JSON.
-      var asd = json.decode(response.body);
-      var ggg = "asd";
-      Package sss = new Package();
-      sss.codigo = "asd";
-      sss.servico = "asd";
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.black45,
+        content: Center(
+          child: new CircularProgressIndicator(
+            valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
+            backgroundColor: Colors.grey
+          )
+        )
+      )
+    );
+  
+    final response = await http.get( Rastreio.urlRastreio + codRastreio );
 
-      PackageDAO().insert(sss);
-      String x = "texto";
-      //return Post.fromJson(json.decode(response.body));
+    scaffold.deactivate();
+
+    if (response.statusCode == 200) { 
+      var objResponse = json.decode(response.body);
+      Package package = Package.newInstace().fromMappedJson(objResponse);
+      PackageDAO().insert(package);
+      
+      CustomSnackBar.showSuccess(context, "Pacote adicionado com sucesso");
+
     } else {
-      // If that response was not OK, throw an error.
-      throw Exception('Failed to load post');
+      CustomSnackBar.showError(context, "Código de rastreio não localizado");
     }
   }
 
