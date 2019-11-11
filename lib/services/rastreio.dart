@@ -12,7 +12,7 @@ class Rastreio {
 
   static final String urlRastreio = "https://api.postmon.com.br/v1/rastreio/ect/";
   
-  static rastrearUm( final BuildContext context, final String codRastreio ) async {
+  static Future<Package> rastrearUm( final BuildContext context, final String codRastreio ) async {
 
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
@@ -33,14 +33,17 @@ class Rastreio {
 
     if (response.statusCode == 200) { 
       var objResponse = json.decode(response.body);
-      Package package = Package.newInstace().fromMappedJson(objResponse);
-      PackageDAO().insert(package);
+      Package package = PackageDAO.getInstance().fromMappedJson(objResponse);
       
       CustomSnackBar.showSuccess(context, "Pacote adicionado com sucesso");
 
-    } else {
-      CustomSnackBar.showError(context, "Código de rastreio não localizado");
+      return package;
+
     }
+      
+    CustomSnackBar.showError(context, "Código de rastreio não localizado");
+    return null;
+    
   }
 
 }

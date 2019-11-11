@@ -130,7 +130,7 @@ class _AppBarComponentState extends State<AppBarComponent> with SingleTickerProv
           icon: Icon(Icons.refresh),
           onPressed: () => setState (() async {
             //atualizar status das encomendas
-            var teste = await PackageDAO.getInstance().selectAllRows(Package.newInstace());
+            var teste = await PackageDAO.getInstance().selectAllRows();
             String a = "asd";
           }),
         ),

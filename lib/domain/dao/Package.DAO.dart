@@ -13,4 +13,23 @@ class PackageDAO extends CustomDAO<Package> {
     return new PackageDAO();
   }
 
+  @override
+  Package fromMappedJson(Map<String, dynamic> objJson) {
+    Package package = new Package(
+      codigo: objJson['codigo'],
+      descricao: objJson['descricao'],
+      servico: objJson['servico']
+    );
+    return package;
+  }
+
+  @override
+  Map<String, dynamic> toMap(Package obj) {
+     return {
+      'codigo': obj.codigo,
+      'descricao': obj.descricao,
+      'servico': obj.servico,
+    };
+  }
+
 }
