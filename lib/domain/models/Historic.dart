@@ -1,10 +1,12 @@
 class Historic {
-  final String detalhes;
-  final String local;
-  final DateTime data;
-  final String situacao;
+  String codPackage;
+  String detalhes;
+  String local;
+  DateTime data;
+  String situacao;
 
   Historic({
+    this.codPackage,
     this.detalhes,
     this.local,
     this.data,
