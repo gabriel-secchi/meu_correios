@@ -1,5 +1,6 @@
 
 import 'package:meu_correios/domain/dao/Custom.DAO.dart';
+import 'package:meu_correios/domain/dao/Historic.DAO.dart';
 import 'package:meu_correios/domain/models/Package.dart';
 
 class PackageDAO extends CustomDAO<Package> {
@@ -18,7 +19,8 @@ class PackageDAO extends CustomDAO<Package> {
     Package package = new Package(
       codigo: objJson['codigo'],
       descricao: objJson['descricao'],
-      servico: objJson['servico']
+      servico: objJson['servico'],
+      historico: HistoricDAO.getInstance().fromListMappedJson(objJson['historico'])
     );
     return package;
   }

@@ -18,12 +18,6 @@ abstract class CustomDAO<T> {
     return rowListToListObject(rowList);
   }
 
-  Future<List<T>> selectAllRowsOnQuery( customQuery ) async {
-    Database db = await DBHelper.getInstance.database;
-    List<Map<String, dynamic>> rowList = await customQuery();
-    return rowListToListObject(rowList);
-  }
-
   List<T> rowListToListObject(List<Map<String, dynamic>> rowList) {
     List<T> listObj = new List();
     for(Map<String, dynamic> dynamicObj in rowList) {

@@ -2,6 +2,7 @@
 import 'package:meu_correios/domain/dao/Custom.DAO.dart';
 import 'package:meu_correios/domain/database/DBHelper.dart';
 import 'package:meu_correios/domain/models/Historic.dart';
+import 'package:meu_correios/domain/models/Package.dart';
 import 'package:sqflite/sqflite.dart';
 
 class HistoricDAO extends CustomDAO<Historic> {
@@ -11,7 +12,7 @@ class HistoricDAO extends CustomDAO<Historic> {
     return this._table;
   }
 
-  static CustomDAO getInstance() {
+  static HistoricDAO getInstance() {
     return new HistoricDAO();
   }
 
@@ -27,6 +28,14 @@ class HistoricDAO extends CustomDAO<Historic> {
     return package;
   }
 
+  List<Historic> fromListMappedJson(List<Map<String, dynamic>> listMapJson) {
+    List<Historic> objList = new List();
+    for(Map<String, dynamic> dynamicObj in listMapJson) {
+      objList.add( fromMappedJson(dynamicObj) );
+    }
+    return objList;
+  }
+
   @override
   Map<String, dynamic> toMap(Historic obj) {
      return {
@@ -40,7 +49,6 @@ class HistoricDAO extends CustomDAO<Historic> {
 
   Future<List<Historic>> listAllOfThePackage(String codPackage) async {
     Database db = await DBHelper.getInstance.database;
-    /*Database db = await DBHelper.getInstance.database;
     List<Map<String, dynamic>> rowList = await db.query(
       getTableName(),
       where: 'codPackage = ?',
@@ -49,16 +57,22 @@ class HistoricDAO extends CustomDAO<Historic> {
     );
 
     return rowListToListObject(rowList);
-    */
-    var customQuery = () => db.query(
-      getTableName(),
-      where: 'codPackage = ?',
-      whereArgs: [codPackage],
-      orderBy: 'situacao DESC'
-    );
-
-    return await selectAllRowsOnQuery( customQuery );
   }
 
+  Future<int> deleteAllOfThePackage(String codPackage) async {
+    Database db = await DBHelper.getInstance.database;
+    return await db.delete(
+      getTableName(), 
+      where: 'codPackage = ?',
+      whereArgs: [codPackage]
+    );
+  }
+
+  insertOnPackage(List<Historic> listaObj, Package pacote) async {
+    for(Historic obj in listaObj) {
+      obj.codPackage = pacote.codigo;
+      this.insert(obj);
+    }
+  }
 
 }
