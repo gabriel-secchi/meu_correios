@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meu_correios/domain/dao/Historic.DAO.dart';
 import 'package:meu_correios/domain/dao/Package.DAO.dart';
 import 'package:meu_correios/domain/models/Package.dart';
 import 'package:meu_correios/services/rastreio.dart';
@@ -44,7 +45,8 @@ class AddPackage {
                 Rastreio.rastrearUm(context, _tfCodigoController.text)
                   .then((package) {
                     package.descricao = _tfDescricaoController.text;
-                    PackageDAO().insert(package);
+                    PackageDAO.getInstance().insert(package);
+                    HistoricDAO.getInstance().insertList(package.historico);
                   });
               },
             )

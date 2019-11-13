@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:meu_correios/domain/database/MigrationExecutor.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -36,8 +37,10 @@ class DBHelper {
   }
 
   Future _onCreate(Database db, int version) async {
-    await db.execute(
-      "CREATE TABLE Package (codigo TEXT NOT NULL, descricao TEXT NOT NULL, servico TEXT NULL)"
-    );
+    //await db.execute(
+    //  "CREATE TABLE Package (codigo TEXT NOT NULL, descricao TEXT NOT NULL, servico TEXT NULL)"
+    //);
+    MigrationExecutor migrationExecutor = new MigrationExecutor( db: db );
+    migrationExecutor.execute();
   }
 }

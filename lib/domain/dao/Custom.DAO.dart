@@ -12,6 +12,17 @@ abstract class CustomDAO<T> {
     return await db.insert(getTableName(), toMap(obj));
   }
 
+  insertList(List<T> objList) async {
+    if(objList == null || objList.length == 0)
+      return;
+
+    for(T obj in objList) {
+      int result = await insert(obj);
+    }
+
+    return;
+  }
+
   Future<List<T>> selectAllRows() async {
     Database db = await DBHelper.getInstance.database;
     List<Map<String, dynamic>> rowList = await db.query(getTableName());
