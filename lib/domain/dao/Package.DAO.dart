@@ -20,7 +20,7 @@ class PackageDAO extends CustomDAO<Package> {
       codigo: objJson['codigo'],
       descricao: objJson['descricao'],
       servico: objJson['servico'],
-      historico: HistoricDAO.getInstance().fromListMappedJson(objJson['historico'])
+      historico: HistoricDAO.getInstance().fromListMappedJson(objJson['historico'], codPackage: objJson['codigo'])
     );
     return package;
   }

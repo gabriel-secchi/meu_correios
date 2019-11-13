@@ -1,4 +1,5 @@
 
+import 'package:intl/intl.dart';
 import 'package:meu_correios/domain/dao/Custom.DAO.dart';
 import 'package:meu_correios/domain/database/DBHelper.dart';
 import 'package:meu_correios/domain/models/Historic.dart';
@@ -22,16 +23,24 @@ class HistoricDAO extends CustomDAO<Historic> {
       codPackage: objJson['codPackage'],
       detalhes: objJson['detalhes'],
       local: objJson['local'],
-      data: objJson['data'],
+      data: new DateFormat("dd/MM/yyyy hh:mm").parse(objJson['data']),
       situacao: objJson['situacao'],
     );
+
     return package;
   }
 
-  List<Historic> fromListMappedJson(List<Map<String, dynamic>> listMapJson) {
+  List<Historic> fromListMappedJson(List<dynamic> listMapJson, {String codPackage = null}) {
     List<Historic> objList = new List();
+    if(listMapJson == null)
+      return objList;
+
     for(Map<String, dynamic> dynamicObj in listMapJson) {
-      objList.add( fromMappedJson(dynamicObj) );
+      Historic obj = fromMappedJson(dynamicObj);
+      if(codPackage != null)
+        obj.codPackage = codPackage;
+
+      objList.add( obj );
     }
     return objList;
   }
