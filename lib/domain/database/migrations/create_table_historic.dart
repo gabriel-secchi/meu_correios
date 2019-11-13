@@ -14,8 +14,8 @@ class CreateTableHistoric extends Migration {
     String sql = "CREATE TABLE Historic ( "+
         "codPackage TEXT NOT NULL, " +
         "detalhes TEXT NULL, " +
-        "local TEXT NULL"+
-        "data DATE NOT NULL"+
+        "local TEXT NULL, "+
+        "data DATE NOT NULL, "+
         "situacao TEXT NULL"+
       ")";
 

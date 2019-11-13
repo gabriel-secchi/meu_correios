@@ -36,7 +36,8 @@ abstract class Migration {
         MigrationExecutor.TABLE_NAME, 
         {
           'migration': migrationName, 
-          'run_date': DateFormat('dd/MM/yyyy hh:mm').format(DateTime.now()) 
+          //'run_date': DateFormat('dd/MM/yyyy hh:mm').format(DateTime.now())
+          'run_date': DateTime.now()
         }
       );
     });
