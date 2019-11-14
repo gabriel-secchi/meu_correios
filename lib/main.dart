@@ -4,6 +4,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:meu_correios/components/addPackage.dart';
 import 'package:meu_correios/components/app_bar_component.dart';
+import 'package:meu_correios/components/list_package/card_item_package.dart';
+import 'package:meu_correios/components/list_package/package_list.dart';
+import 'package:meu_correios/domain/dao/Package.DAO.dart';
+import 'package:meu_correios/domain/models/Package.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,12 +36,13 @@ class MyHomePage extends StatefulWidget {
 
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
-    
+
   onFilterChange(String asd) {
     setState(() {
       log(asd);
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +64,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           
           body: TabBarView(
             children: [
-              Icon(Icons.directions_car),
+              //Icon(Icons.directions_car),
+              PackageList(packageType: PackageList.PACKAGE_ALL),
               Icon(Icons.directions_transit),
               Scaffold(
                 body: Center (child: Text("teste gabriel "),),
