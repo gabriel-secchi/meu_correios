@@ -13,7 +13,7 @@ class MigrationExecutor {
   });
 
   _createMigrationTable() async {
-    String sql = 'CREATE TABLE IF NOT EXISTS ${this._TABLE} (migration TEXT NOT NULL PRIMARY KEY, run_date DATETIME NOT NULL)';
+    String sql = 'CREATE TABLE IF NOT EXISTS ${this._TABLE} (migration TEXT NOT NULL PRIMARY KEY, run_date INT NOT NULL)';
     await this.db.execute(sql);
   }
 

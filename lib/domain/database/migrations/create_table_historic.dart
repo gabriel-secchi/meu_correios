@@ -15,7 +15,7 @@ class CreateTableHistoric extends Migration {
         "codPackage TEXT NOT NULL, " +
         "detalhes TEXT NULL, " +
         "local TEXT NULL, "+
-        "data DATE NOT NULL, "+
+        "data INT NOT NULL, "+
         "situacao TEXT NULL"+
       ")";
 

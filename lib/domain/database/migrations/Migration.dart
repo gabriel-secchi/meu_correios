@@ -37,7 +37,7 @@ abstract class Migration {
         {
           'migration': migrationName, 
           //'run_date': DateFormat('dd/MM/yyyy hh:mm').format(DateTime.now())
-          'run_date': DateTime.now()
+          'run_date': DateFormat('yyyMMddhhmmss').format(DateTime.now())
         }
       );
     });

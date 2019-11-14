@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,7 @@ class Rastreio {
     );
   
     final response = await http.get( Rastreio.urlRastreio + codRastreio );
-
+    
     scaffold.deactivate();
 
     if (response.statusCode == 200) { 

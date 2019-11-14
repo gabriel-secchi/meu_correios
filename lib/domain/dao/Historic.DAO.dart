@@ -19,11 +19,22 @@ class HistoricDAO extends CustomDAO<Historic> {
 
   @override
   Historic fromMappedJson(Map<String, dynamic> objJson) {
+
+    String _strDate = objJson['data'];
+    DateTime _date = DateTime.now();
+    if( _strDate.isNotEmpty ) {
+      if(_strDate.contains("/"))
+        _date = new DateFormat("dd/MM/yyyy hh:mm").parse(_strDate);
+      else
+        _date = new DateFormat("yyyMMddhhmmss").parse(_strDate);
+    }
+
     Historic package = new Historic(
       codPackage: objJson['codPackage'],
       detalhes: objJson['detalhes'],
       local: objJson['local'],
-      data: new DateFormat("dd/MM/yyyy hh:mm").parse(objJson['data']),
+      //data: new DateFormat("dd/MM/yyyy hh:mm").parse(objJson['data']),
+      data: _date,
       situacao: objJson['situacao'],
     );
 
@@ -51,7 +62,7 @@ class HistoricDAO extends CustomDAO<Historic> {
       'codPackage': obj.codPackage,
       'detalhes': obj.detalhes,
       'local': obj.local,
-      'data': obj.data,
+      'data': new DateFormat("yyyMMddhhmmss").format(obj.data),
       'situacao': obj.situacao,
     };
   }

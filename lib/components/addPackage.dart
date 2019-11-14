@@ -19,15 +19,19 @@ class AddPackage {
           content: new Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              TextField(
-                controller: _tfDescricaoController,
-                decoration: InputDecoration(hintText: "Descrição do pacote"),
-                autofocus: true,
+              Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 20,
+                ),
+                child: TextField(
+                  controller: _tfDescricaoController,
+                  decoration: InputDecoration(hintText: "Descrição do pacote"),
+                  autofocus: true,
+                ),
               ),
               TextField(
                 controller: _tfCodigoController,
                 decoration: InputDecoration(hintText: "Código de rastreio"),
-                autofocus: true,
               )
             ],
           ),
