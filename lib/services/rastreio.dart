@@ -1,47 +1,37 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:meu_correios/domain/dao/Package.DAO.dart';
 import 'package:meu_correios/domain/models/Package.dart';
-import 'package:meu_correios/services/customSnackBar.dart';
+import 'package:meu_correios/domain/dao/Package.DAO.dart';
+import 'package:meu_correios/services/customLoading.dart';
 
 class Rastreio {
 
   static final String urlRastreio = "https://api.postmon.com.br/v1/rastreio/ect/";
+  BuildContext _context;
+
+  Rastreio(this._context);
   
-  static Future<Package> rastrearUm( final BuildContext context, final String codRastreio ) async {
+  Future<bool> rastrearUm( String codPackage, onSuccessTracking ) async {
+    try {
 
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.black45,
-        content: Center(
-          child: new CircularProgressIndicator(
-            valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
-            backgroundColor: Colors.grey
-          )
-        )
-      )
-    );
-  
-    final response = await http.get( Rastreio.urlRastreio + codRastreio );
-    
-    scaffold.deactivate();
+      final response = await CustomLoading(this._context).show(() {
+        return http.get( Rastreio.urlRastreio + codPackage );
+      });
 
-    if (response.statusCode == 200) { 
-      var objResponse = json.decode(response.body);
-      Package package = PackageDAO.getInstance().fromMappedJson(objResponse);
-      
-      CustomSnackBar.showSuccess(context, "Pacote adicionado com sucesso");
+      if (response.statusCode == 200) { 
+        var objResponse = json.decode(response.body);
+        Package objTracking = PackageDAO.getInstance().fromMappedJson(objResponse);
+        await onSuccessTracking(objTracking);
+        return true;
+      }
 
-      return package;
-
+      throw("no find object");
     }
-      
-    CustomSnackBar.showError(context, "Código de rastreio não localizado");
-    return null;
+    catch(error) {
+      throw("Código de rastreio não localizado");
+    }
     
   }
 
