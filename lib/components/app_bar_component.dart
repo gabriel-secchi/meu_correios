@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meu_correios/domain/dao/Package.DAO.dart';
-import 'package:meu_correios/domain/models/Package.dart';
-import 'package:meu_correios/services/rastreio.dart';
 
 class AppBarComponent extends StatefulWidget implements PreferredSizeWidget {
   String textTitle;
@@ -130,8 +127,6 @@ class _AppBarComponentState extends State<AppBarComponent> with SingleTickerProv
           icon: Icon(Icons.refresh),
           onPressed: () => setState (() async {
             //atualizar status das encomendas
-            var teste = await PackageDAO.getInstance().selectAllRows();
-            String a = "asd";
           }),
         ),
       ],

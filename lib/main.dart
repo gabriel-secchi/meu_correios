@@ -67,22 +67,24 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             ],
           ),
 
-          floatingActionButton: new Builder(
-            builder: (BuildContext ctxActionButtom) {
-              return new FloatingActionButton(
-                tooltip: "Adicionar encomenta",
-                child: Icon(Icons.add),
-                onPressed: ()   => setState(() {
-                  AddPackage.dialog(ctxActionButtom);
-                  //CustomSnackBar.showSuccess(ctxActionButtom, "teste");
-                }),
-              );
-            },
-          ),
-          
+          floatingActionButton: _buildButtonAddPackage()          
             
         ),
       ),
+    );
+  }
+
+  _buildButtonAddPackage() {
+    return new Builder(
+      builder: (BuildContext ctxActionButtom) {
+        return new FloatingActionButton(
+          tooltip: "Adicionar encomenta",
+          child: Icon(Icons.add),
+          onPressed: () => setState(() {
+            DialogAddPackage(ctxActionButtom).open();
+          }),
+        );
+      },
     );
   }
 }
