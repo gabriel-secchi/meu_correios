@@ -38,6 +38,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
 
   List<Widget>_listItens = new List();
+  List<Package> _listPackage = new List();
 
   onFilterChange(String asd) {
     setState(() {
@@ -77,7 +78,26 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               ListView(
                 children: _listItens,
               ),
-              Icon(Icons.directions_transit),
+
+              AnimatedList(
+                initialItemCount: _listPackage.length, 
+                itemBuilder: (BuildContext context, int index, Animation animation) {
+                  return SlideTransition(
+                    position: animation.drive(
+                      Tween<Offset>(
+                        begin: const Offset(-1, 0),
+                        end: Offset.zero,
+                      )
+                    ),
+                    child: Card(
+                      child: Center(
+                        child: Text('cod rastreios: ${_listPackage.elementAt(index).codigo}')
+                      )
+                    )
+                  );
+                },
+              ),
+              
               Scaffold(
                 body: Center (child: Text("teste gabriel "),),
               )
@@ -109,6 +129,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     PackageDAO.getInstance().selectAllRows().then((listPackage) { 
       setState(() {
         _listItens = new List();
+        _listPackage = listPackage;
         for(Package package in listPackage){
           _listItens.add(
             Card(
