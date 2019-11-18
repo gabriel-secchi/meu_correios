@@ -26,7 +26,7 @@ class CustomSnackBar {
 
   static showError(final BuildContext context, final String texto) {
     CustomSnackBar csb = new CustomSnackBar(context: context);
-    csb.show(texto, Colors.red, Duration(seconds: 3));
+    csb.show(texto, Colors.red, Duration(seconds: 4));
   }
 
 }

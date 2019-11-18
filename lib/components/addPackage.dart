@@ -9,11 +9,13 @@ class DialogAddPackage {
 
   BuildContext _context;
   Package _addPackage;
+  var _successCallback;
 
   DialogAddPackage(this._context);
 
-  open() async {
-    
+  open({successcallback = false}) async {
+    this._successCallback = successcallback;
+
     TextEditingController _tfDescricaoController = TextEditingController();
     TextEditingController _tfCodigoController = TextEditingController();
 
@@ -80,6 +82,9 @@ class DialogAddPackage {
     objTracking.descricao = this._addPackage.descricao;
     this._addPackage = objTracking;
     this._saveTrackedPackage();
+
+    if(this._successCallback  != false)
+      this._successCallback();
   }
 
   _saveTrackedPackage() {

@@ -37,10 +37,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
 
+  List<Widget>_listItens = new List();
+
   onFilterChange(String asd) {
     setState(() {
       log(asd);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _teste();
   }
 
 
@@ -65,7 +73,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           body: TabBarView(
             children: [
               //Icon(Icons.directions_car),
-              PackageList(packageType: PackageList.PACKAGE_ALL),
+              //PackageList(packageType: PackageList.PACKAGE_ALL),
+              ListView(
+                children: _listItens,
+              ),
               Icon(Icons.directions_transit),
               Scaffold(
                 body: Center (child: Text("teste gabriel "),),
@@ -87,10 +98,27 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           tooltip: "Adicionar encomenta",
           child: Icon(Icons.add),
           onPressed: () => setState(() {
-            DialogAddPackage(ctxActionButtom).open();
+            DialogAddPackage(ctxActionButtom).open( successcallback: _teste );
           }),
         );
       },
     );
+  }
+
+  _teste() {
+    PackageDAO.getInstance().selectAllRows().then((listPackage) { 
+      setState(() {
+        _listItens = new List();
+        for(Package package in listPackage){
+          _listItens.add(
+            Card(
+                child: Center(
+                  child: Text('cod rastreios: ${package.codigo}')
+                )
+              )
+          );
+        }
+      });
+    });
   }
 }
