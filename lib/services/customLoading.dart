@@ -23,7 +23,7 @@ class CustomLoading {
 
     final result = await onLifeLoading();
 
-    loading.deactivate();
+    loading.hideCurrentSnackBar();
 
     return result;
   }
