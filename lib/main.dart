@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:meu_correios/components/addPackage.dart';
 import 'package:meu_correios/components/app_bar_component.dart';
-import 'package:meu_correios/components/list_package/card_item_package.dart';
 import 'package:meu_correios/components/list_package/package_list.dart';
 import 'package:meu_correios/domain/dao/Package.DAO.dart';
 import 'package:meu_correios/domain/models/Package.dart';
@@ -37,21 +36,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
 
-  List<Widget>_listItens = new List();
-  List<Package> _listPackage = new List();
-
   onFilterChange(String asd) {
     setState(() {
       log(asd);
     });
   }
-
-  @override
-  void initState() {
-    super.initState();
-    _teste();
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -74,30 +63,12 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           body: TabBarView(
             children: [
               //Icon(Icons.directions_car),
-              //PackageList(packageType: PackageList.PACKAGE_ALL),
-              ListView(
-                children: _listItens,
-              ),
+              new PackageList(packageType: PackageList.PACKAGE_ALL),
 
-              AnimatedList(
-                initialItemCount: _listPackage.length, 
-                itemBuilder: (BuildContext context, int index, Animation animation) {
-                  return SlideTransition(
-                    position: animation.drive(
-                      Tween<Offset>(
-                        begin: const Offset(-1, 0),
-                        end: Offset.zero,
-                      )
-                    ),
-                    child: Card(
-                      child: Center(
-                        child: Text('cod rastreios: ${_listPackage.elementAt(index).codigo}')
-                      )
-                    )
-                  );
-                },
-              ),
+
+              Icon(Icons.directions_car),
               
+
               Scaffold(
                 body: Center (child: Text("teste gabriel "),),
               )
@@ -127,9 +98,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
   _teste() {
     PackageDAO.getInstance().selectAllRows().then((listPackage) { 
+      /*_addAnItem(listPackage);
       setState(() {
         _listItens = new List();
-        _listPackage = listPackage;
+        //_listPackage = listPackage;
         for(Package package in listPackage){
           _listItens.add(
             Card(
@@ -139,7 +111,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               )
           );
         }
-      });
+      });*/
     });
   }
+
 }

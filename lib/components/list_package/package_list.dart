@@ -15,103 +15,60 @@ class PackageList extends StatefulWidget  {
   @override
   _PackageListState createState() => _PackageListState();
 
+  void teste123 () {
+    return;
+  }
 }
 
 class _PackageListState extends State<PackageList> {
-  //final int packageType;
-  Package _selectedItem;
-  ListModel<Package> _list = new ListModel();
+  
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-
-  //_PackageListState(this.packageType);
+  List<Package> _listPackage = new List();
 
   @override
   void initState() {
     super.initState();
-    if(widget.packageType == PackageList.PACKAGE_ALL) {
-      PackageDAO.getInstance().selectAllRows().then((listPackage) { 
-        setState(() {
-          //_list = listPackage;
-          _list = ListModel<Package>(
-            listKey: _listKey,
-            initialItems: listPackage,
-            removedItemBuilder: _buildRemovedItem
-          );
-        });
-      });
-    }
+    _loadItens();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: AnimatedList(
-        key: _listKey,
-        initialItemCount: _list == null ? 0 : _list.length,
-        itemBuilder: _buildItem,
-      ),
+    return AnimatedList(
+      key: _listKey,
+      initialItemCount: _listPackage.length, 
+      itemBuilder: _buildItem,
     );
   }
 
   Widget _buildItem( BuildContext context, int index, Animation<double> animation ) {
-    return CardItemPackage(
-      animation: animation,
-      item: _list[index],
-      selected: _selectedItem == _list[index],
-      onTap: () {
-        setState(() {
-          _selectedItem = _selectedItem == _list[index] ? null : _list[index];
-        });
-      },
+    return SlideTransition(
+      textDirection: TextDirection.ltr,
+      transformHitTests: true,
+      position: animation.drive(
+        Tween<Offset>(
+          begin: Offset(1.0, 1.0),
+          end: Offset(0.0, 1.0),
+        ),
+      ),
+      child: new CardItemPackage(package: _listPackage.elementAt(index))
     );
   }
 
-  Widget _buildRemovedItem(Package item, BuildContext context, Animation<double> animation) {
-    return CardItemPackage(
-      animation: animation,
-      item: item,
-      selected: false,
-      // No gesture detector here: we don't want removed items to be interactive.
-    );
+  void addAnItem(Package package) {
+      _listPackage.insert(0, package);
+      _listKey.currentState.insertItem(0);
   }
 
-}
-
-class ListModel<E> {
-  ListModel({
-    @required this.listKey,
-    @required this.removedItemBuilder,
-    List<E> initialItems,
-  })  : assert(listKey != null),
-        assert(removedItemBuilder != null),
-        _items = List<E>.from(initialItems ?? <E>[]);
-
-  final GlobalKey<AnimatedListState> listKey;
-  final dynamic removedItemBuilder;
-  final List<E> _items;
-
-  AnimatedListState get _animatedList => listKey.currentState;
-
-  void insert(int index, E item) {
-    _items.insert(index, item);
-    _animatedList.insertItem(index);
-  }
-
-  E removeAt(int index) {
-    final E removedItem = _items.removeAt(index);
-    if (removedItem != null) {
-      _animatedList.removeItem(index,
-          (BuildContext context, Animation<double> animation) {
-        return removedItemBuilder(removedItem, context, animation);
-      });
+  void addItemList(List<Package> listPackage) {
+    for(Package package in listPackage){
+      addAnItem(package);
     }
-    return removedItem;
   }
 
-  int get length => _items.length;
+  void _loadItens() {
+    PackageDAO.getInstance().selectAllRows().then((listPackage) { 
+      addItemList(listPackage);
+    });
+  }
 
-  E operator [](int index) => _items[index];
-
-  int indexOf(E item) => _items.indexOf(item);
 }
