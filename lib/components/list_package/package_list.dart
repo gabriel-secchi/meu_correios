@@ -29,12 +29,23 @@ class PackageList extends StatefulWidget  {
 class _PackageListState extends State<PackageList> {
   
   void filtrar(String texto) {
-    addAnItem(
-      new Package(
-        codigo: "aaa: " + texto,
-        descricao: "teste gabriel"
-      )
-    );
+
+    setState(() {
+      
+      _listPackage = _listPackage.where(
+        (i) => i.descricao.contains(texto)
+      ).toList();
+
+      String asd = "asd";
+
+    });
+    
+    //addAnItem(
+    //  new Package(
+    //    codigo: "aaa: " + texto,
+    //    descricao: "teste gabriel"
+    //  )
+    //);
   }
 
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
@@ -71,7 +82,7 @@ class _PackageListState extends State<PackageList> {
 
   void addAnItem(Package package) {
       _listPackage.insert(0, package);
-      _listKey.currentState.insertItem(0);
+      _listKey.currentState.insertItem(0, duration: Duration(milliseconds: 400));
   }
 
   void addItemList(List<Package> listPackage) {
