@@ -5,23 +5,38 @@ import 'package:meu_correios/domain/models/Package.dart';
 
 class PackageList extends StatefulWidget  {
   static int PACKAGE_ALL = 1;
+  static int PACKAGE_ON_CARRIAGE = 2;
+  static int PACKAGE_DELIVERED = 3;
 
   int packageType;
+
   PackageList({
     Key key,
     this.packageType
   }) : super(key: key);
 
-  @override
-  _PackageListState createState() => _PackageListState();
+  _PackageListState _packageListState;
 
-  void teste123 () {
-    return;
+  @override
+  _PackageListState createState() {
+    _packageListState = _PackageListState();
+    return _packageListState;
   }
+
+  filtrar(String texto) => _packageListState.filtrar(texto);
 }
 
 class _PackageListState extends State<PackageList> {
   
+  void filtrar(String texto) {
+    addAnItem(
+      new Package(
+        codigo: "aaa: " + texto,
+        descricao: "teste gabriel"
+      )
+    );
+  }
+
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   List<Package> _listPackage = new List();
 

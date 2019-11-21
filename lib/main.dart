@@ -36,10 +36,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
 
-  onFilterChange(String asd) {
-    setState(() {
-      log(asd);
-    });
+  PackageList packageList;
+
+  @override
+  void initState() {
+    super.initState();
+     packageList = new PackageList(packageType: PackageList.PACKAGE_ALL);
   }
 
   @override
@@ -57,13 +59,14 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                 Tab(icon: Icon(Icons.archive)),
               ],
             ),
-            filerCallback: (_param) => onFilterChange(_param),
+            filerCallback: (_param) => _onFilterChange(_param),
           ),
           
           body: TabBarView(
             children: [
               //Icon(Icons.directions_car),
-              new PackageList(packageType: PackageList.PACKAGE_ALL),
+              //PackageList(packageType: PackageList.PACKAGE_ALL),
+              packageList,
 
 
               Icon(Icons.directions_car),
@@ -94,6 +97,13 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         );
       },
     );
+  }
+
+  _onFilterChange(String textFilter) {
+    setState(() {
+      log(textFilter);
+      packageList.filtrar(textFilter);
+    });
   }
 
   _teste() {
