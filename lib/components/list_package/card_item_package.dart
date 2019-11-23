@@ -10,6 +10,9 @@ class CardItemPackage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(package == null)
+      return null;
+      
     return Card(
         child: Center(
           child: Text('rastreios gs: ${package.codigo}')

@@ -28,26 +28,6 @@ class PackageList extends StatefulWidget  {
 
 class _PackageListState extends State<PackageList> {
   
-  void filtrar(String texto) {
-
-    setState(() {
-      
-      _listPackage = _listPackage.where(
-        (i) => i.descricao.contains(texto)
-      ).toList();
-
-      String asd = "asd";
-
-    });
-    
-    //addAnItem(
-    //  new Package(
-    //    codigo: "aaa: " + texto,
-    //    descricao: "teste gabriel"
-    //  )
-    //);
-  }
-
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   List<Package> _listPackage = new List();
 
@@ -61,12 +41,25 @@ class _PackageListState extends State<PackageList> {
   Widget build(BuildContext context) {
     return AnimatedList(
       key: _listKey,
-      initialItemCount: _listPackage.length, 
+      initialItemCount: 0, //_listPackage == null ? 0 :_listPackage.length,
       itemBuilder: _buildItem,
     );
   }
 
   Widget _buildItem( BuildContext context, int index, Animation<double> animation ) {
+    String teste = "asd";
+
+    return SizeTransition(
+      sizeFactor: animation.drive(
+        Tween<double>(
+          begin: 0,
+          end: 1,
+        ),
+      ),
+      child: new CardItemPackage(package: _listPackage.elementAt(index)),
+    );
+
+    /*
     return SlideTransition(
       textDirection: TextDirection.ltr,
       transformHitTests: true,
@@ -78,6 +71,17 @@ class _PackageListState extends State<PackageList> {
       ),
       child: new CardItemPackage(package: _listPackage.elementAt(index))
     );
+    */
+  }
+
+  void filtrar(String texto) {
+    setState(() {
+      _listPackage = _listPackage.where(
+        (i) => i.descricao.contains(texto)
+      ).toList();
+
+      String asd = "asd";
+    });
   }
 
   void addAnItem(Package package) {
@@ -86,7 +90,7 @@ class _PackageListState extends State<PackageList> {
   }
 
   void addItemList(List<Package> listPackage) {
-    for(Package package in listPackage){
+    for(Package package in listPackage) {
       addAnItem(package);
     }
   }
