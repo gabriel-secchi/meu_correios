@@ -14,8 +14,9 @@ class CardItemPackage extends StatelessWidget {
       return null;
       
     return Card(
-        child: Center(
-          child: Text('rastreios gs: ${package.codigo}')
+        child: ListTile(
+          title: Text(package.descricao),
+          subtitle: Text(package.codigo),
         )
       );
   }

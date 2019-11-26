@@ -29,7 +29,7 @@ class PackageList extends StatefulWidget  {
 class _PackageListState extends State<PackageList> {
   
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
-  List<Package> _listPackage = new List();
+  List<Package> _listPackageMain = new List();
 
   @override
   void initState() {
@@ -54,51 +54,54 @@ class _PackageListState extends State<PackageList> {
           end: 1,
         ),
       ),
-      child: new CardItemPackage(package: _listPackage.elementAt(index)),
+      child: new CardItemPackage(package: _listPackageMain.elementAt(index)),
         
     );
 
-    /*return SizeTransition(
-      sizeFactor: animation.drive(
-        Tween<double>(
-          begin: 0,
-          end: 1,
-        ),
-      ),
-      child: new CardItemPackage(package: _listPackage.elementAt(index)),
-    );*/
-
-    /*
-    return SlideTransition(
-      textDirection: TextDirection.ltr,
-      transformHitTests: true,
-      position: animation.drive(
-        Tween<Offset>(
-          begin: Offset(1.0, 1.0),
-          end: Offset(0.0, 1.0),
-        ),
-      ),
-      child: new CardItemPackage(package: _listPackage.elementAt(index))
-    );
-    */
+    
   }
 
   void filtrar(String texto) {
     PackageDAO.getInstance().selectAllRows().then((listPackage) {
-      setState(() async {
-        await _removeAllItems();
-        if(texto.isEmpty)
-          addItemList(listPackage);
-        else {
-          addItemList(
-            listPackage.where(
+      //setState(() {
+
+        List<Package> filtrados = listPackage.where(
               (i) => i.descricao.contains(texto)
-            ).toList()
-          );
+        ).toList();
+
+        // _removeAllItems();
+        // addItemList(filtrados);
+        // _listPackageMain = filtrados;
+
+        for(Package item in _listPackageMain) {
+          if(filtrados.contains(item)) {
+            String teste = "aaa";
+            String asd = "teste";
+            continue;
+          }
+
+          _removeAnIten(_listPackageMain.indexOf(item));
         }
+
+        for(Package item in filtrados) {
+          if(_listPackageMain.contains(item))
+            continue;
+
+          addAnItem(item);
+        }
+        
+        // if(texto.isEmpty)
+        //   addItemList(listPackage);
+        // else {
+        //   addItemList(
+        //     listPackage.where(
+        //       (i) => i.descricao.contains(texto)
+        //     ).toList()
+        //   );
+        // }
       });
 
-    });
+    //});
 
     /*setState(() {
       _listPackage = _listPackage.where(
@@ -110,7 +113,7 @@ class _PackageListState extends State<PackageList> {
   }
 
   void addAnItem(Package package) {
-      _listPackage.insert(0, package);
+      _listPackageMain.insert(0, package);
       _listKey.currentState.insertItem(0, duration: Duration(milliseconds: 500));
   }
 
@@ -126,8 +129,17 @@ class _PackageListState extends State<PackageList> {
     });
   }
 
+  void _removeAnIten(int position) {
+    _listPackageMain.removeAt(position);
+    _listKey.currentState.removeItem(
+      position, 
+      (BuildContext context, Animation<double> animation) => _buildItem(context, 0, animation), 
+      duration: const Duration(milliseconds: 500)
+    );
+  }
+
   void _removeAllItems() {
-    final int itemCount = _listPackage.length;
+    final int itemCount = _listPackageMain.length;
   
       for (var i = 0; i < itemCount; i++) {
         //Package itemToRemove = _listPackage.elementAt(0);
@@ -136,7 +148,7 @@ class _PackageListState extends State<PackageList> {
           duration: const Duration(milliseconds: 250),
         );
   
-        _listPackage.removeAt(0);
+        _listPackageMain.removeAt(0);
       }
   }
 

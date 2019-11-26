@@ -59,7 +59,7 @@ class _AppBarComponentState extends State<AppBarComponent> with SingleTickerProv
           } 
           else if(animationStage == 2) {
             removeFilterField();
-            this.widget.filerCallback(null);
+            this.widget.filerCallback("");
           }
         }
       });
@@ -78,7 +78,6 @@ class _AppBarComponentState extends State<AppBarComponent> with SingleTickerProv
           hintStyle: new TextStyle(color: Colors.white)
         ),
         autofocus: true,
-        //onChanged: (_text) => this.widget.filerCallback,
         onChanged: (_text) => this.widget.filerCallback(_text),
       );
       animationStage = 2;
