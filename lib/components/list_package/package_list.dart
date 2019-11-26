@@ -47,9 +47,18 @@ class _PackageListState extends State<PackageList> {
   }
 
   Widget _buildItem( BuildContext context, int index, Animation<double> animation ) {
-    String teste = "asd";
+    return FadeTransition(
+      opacity: animation.drive(
+        Tween<double>(
+          begin: 0,
+          end: 1,
+        ),
+      ),
+      child: new CardItemPackage(package: _listPackage.elementAt(index)),
+        
+    );
 
-    return SizeTransition(
+    /*return SizeTransition(
       sizeFactor: animation.drive(
         Tween<double>(
           begin: 0,
@@ -57,7 +66,7 @@ class _PackageListState extends State<PackageList> {
         ),
       ),
       child: new CardItemPackage(package: _listPackage.elementAt(index)),
-    );
+    );*/
 
     /*
     return SlideTransition(
@@ -75,18 +84,34 @@ class _PackageListState extends State<PackageList> {
   }
 
   void filtrar(String texto) {
-    setState(() {
+    PackageDAO.getInstance().selectAllRows().then((listPackage) {
+      setState(() async {
+        await _removeAllItems();
+        if(texto.isEmpty)
+          addItemList(listPackage);
+        else {
+          addItemList(
+            listPackage.where(
+              (i) => i.descricao.contains(texto)
+            ).toList()
+          );
+        }
+      });
+
+    });
+
+    /*setState(() {
       _listPackage = _listPackage.where(
         (i) => i.descricao.contains(texto)
       ).toList();
 
       String asd = "asd";
-    });
+    });*/
   }
 
   void addAnItem(Package package) {
       _listPackage.insert(0, package);
-      _listKey.currentState.insertItem(0, duration: Duration(milliseconds: 400));
+      _listKey.currentState.insertItem(0, duration: Duration(milliseconds: 500));
   }
 
   void addItemList(List<Package> listPackage) {
@@ -99,6 +124,20 @@ class _PackageListState extends State<PackageList> {
     PackageDAO.getInstance().selectAllRows().then((listPackage) { 
       addItemList(listPackage);
     });
+  }
+
+  void _removeAllItems() {
+    final int itemCount = _listPackage.length;
+  
+      for (var i = 0; i < itemCount; i++) {
+        //Package itemToRemove = _listPackage.elementAt(0);
+        _listKey.currentState.removeItem(0,
+          (BuildContext context, Animation<double> animation) => _buildItem(context, 0, animation),
+          duration: const Duration(milliseconds: 250),
+        );
+  
+        _listPackage.removeAt(0);
+      }
   }
 
 }
