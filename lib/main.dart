@@ -91,9 +91,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         return new FloatingActionButton(
           tooltip: "Adicionar encomenta",
           child: Icon(Icons.add),
-          onPressed: () => setState(() {
-            DialogAddPackage(ctxActionButtom).open( successcallback: _teste );
-          }),
+          onPressed: () => { packageList.deleteUm() }//setState(() {
+            //DialogAddPackage(ctxActionButtom).open( successcallback: _successAddPackage );
+          //}),
         );
       },
     );
@@ -106,23 +106,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     });
   }
 
-  _teste() {
-    PackageDAO.getInstance().selectAllRows().then((listPackage) { 
-      /*_addAnItem(listPackage);
-      setState(() {
-        _listItens = new List();
-        //_listPackage = listPackage;
-        for(Package package in listPackage){
-          _listItens.add(
-            Card(
-                child: Center(
-                  child: Text('cod rastreios: ${package.codigo}')
-                )
-              )
-          );
-        }
-      });*/
-    });
+  _successAddPackage() {
+    //TODO: implemetar método
   }
 
 }

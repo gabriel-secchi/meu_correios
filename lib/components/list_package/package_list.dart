@@ -24,6 +24,7 @@ class PackageList extends StatefulWidget  {
   }
 
   filtrar(String texto) => _packageListState.filtrar(texto);
+  deleteUm() => _packageListState._removeAnIten(0);
 }
 
 class _PackageListState extends State<PackageList> {
@@ -47,7 +48,7 @@ class _PackageListState extends State<PackageList> {
   }
 
   Widget _buildItem( BuildContext context, int index, Animation<double> animation ) {
-    return FadeTransition(
+    /* return FadeTransition(
       opacity: animation.drive(
         Tween<double>(
           begin: 0,
@@ -56,7 +57,14 @@ class _PackageListState extends State<PackageList> {
       ),
       child: new CardItemPackage(package: _listPackageMain.elementAt(index)),
         
-    );
+    ); */
+    return SizeTransition(
+        sizeFactor: animation,
+        axis: Axis.vertical,
+        child: SizedBox(
+          child: new CardItemPackage(package: _listPackageMain.elementAt(index))
+        ),
+      );
 
     
   }
@@ -73,48 +81,43 @@ class _PackageListState extends State<PackageList> {
         // addItemList(filtrados);
         // _listPackageMain = filtrados;
 
+        List<int> positionToDelete = new List();
         for(Package item in _listPackageMain) {
-          if(filtrados.contains(item)) {
-            String teste = "aaa";
-            String asd = "teste";
+          var finder = filtrados.where((i) => item.descricao.contains(i.descricao));
+          
+          if(finder != null && finder.length > 0)
             continue;
-          }
+                      
+          positionToDelete.add(_listPackageMain.indexOf(item));
+          
+          //_removeAnIten(position);
+          //_listPackageMain.removeAt(position);
+          //positionToDelete.add(position);
+        }
 
-          _removeAnIten(_listPackageMain.indexOf(item));
+        positionToDelete.sort((a, b) => a.compareTo(b));
+
+        for (int pos in positionToDelete) {
+          _removeAnIten(pos);
         }
 
         for(Package item in filtrados) {
-          if(_listPackageMain.contains(item))
+          //if(_listPackageMain.contains(item))
+          var finder = _listPackageMain.where((i) => item.descricao.contains(i.descricao));
+          
+          if(finder != null && finder.length > 0)
             continue;
 
           addAnItem(item);
         }
         
-        // if(texto.isEmpty)
-        //   addItemList(listPackage);
-        // else {
-        //   addItemList(
-        //     listPackage.where(
-        //       (i) => i.descricao.contains(texto)
-        //     ).toList()
-        //   );
-        // }
       });
 
-    //});
-
-    /*setState(() {
-      _listPackage = _listPackage.where(
-        (i) => i.descricao.contains(texto)
-      ).toList();
-
-      String asd = "asd";
-    });*/
   }
 
   void addAnItem(Package package) {
       _listPackageMain.insert(0, package);
-      _listKey.currentState.insertItem(0, duration: Duration(milliseconds: 500));
+      _listKey.currentState.insertItem(0, duration: Duration(milliseconds: 200));
   }
 
   void addItemList(List<Package> listPackage) {
@@ -130,10 +133,12 @@ class _PackageListState extends State<PackageList> {
   }
 
   void _removeAnIten(int position) {
-    _listPackageMain.removeAt(position);
     _listKey.currentState.removeItem(
       position, 
-      (BuildContext context, Animation<double> animation) => _buildItem(context, 0, animation), 
+      (BuildContext context, Animation<double> animation) => _buildItem(context, position, animation),//{
+        //_buildItem(context, position, animation);
+        //_listPackageMain.removeAt(position);
+      //},
       duration: const Duration(milliseconds: 500)
     );
   }
