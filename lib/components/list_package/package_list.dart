@@ -29,6 +29,7 @@ class PackageList extends StatefulWidget  {
 
 class _PackageListState extends State<PackageList> {
   
+  final int _timeAnimation = 250;
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   List<Package> _listPackageMain = new List();
 
@@ -43,30 +44,18 @@ class _PackageListState extends State<PackageList> {
     return AnimatedList(
       key: _listKey,
       initialItemCount: 0, //_listPackage == null ? 0 :_listPackage.length,
-      itemBuilder: _buildItem,
+      itemBuilder: (ctx, index, animation) => _buildItem(ctx, _listPackageMain.elementAt(index), animation),
     );
   }
 
-  Widget _buildItem( BuildContext context, int index, Animation<double> animation ) {
-    /* return FadeTransition(
-      opacity: animation.drive(
-        Tween<double>(
-          begin: 0,
-          end: 1,
-        ),
-      ),
-      child: new CardItemPackage(package: _listPackageMain.elementAt(index)),
-        
-    ); */
+  Widget _buildItem( BuildContext context, Package item, Animation<double> animation ) {
     return SizeTransition(
         sizeFactor: animation,
         axis: Axis.vertical,
         child: SizedBox(
-          child: new CardItemPackage(package: _listPackageMain.elementAt(index))
+          child: new CardItemPackage(package: item)
         ),
       );
-
-    
   }
 
   void filtrar(String texto) {
@@ -77,10 +66,6 @@ class _PackageListState extends State<PackageList> {
               (i) => i.descricao.contains(texto)
         ).toList();
 
-        // _removeAllItems();
-        // addItemList(filtrados);
-        // _listPackageMain = filtrados;
-
         List<int> positionToDelete = new List();
         for(Package item in _listPackageMain) {
           var finder = filtrados.where((i) => item.descricao.contains(i.descricao));
@@ -89,13 +74,9 @@ class _PackageListState extends State<PackageList> {
             continue;
                       
           positionToDelete.add(_listPackageMain.indexOf(item));
-          
-          //_removeAnIten(position);
-          //_listPackageMain.removeAt(position);
-          //positionToDelete.add(position);
         }
 
-        positionToDelete.sort((a, b) => a.compareTo(b));
+        positionToDelete.sort((b, a) => a.compareTo(b));
 
         for (int pos in positionToDelete) {
           _removeAnIten(pos);
@@ -115,9 +96,9 @@ class _PackageListState extends State<PackageList> {
 
   }
 
-  void addAnItem(Package package) {
-      _listPackageMain.insert(0, package);
-      _listKey.currentState.insertItem(0, duration: Duration(milliseconds: 200));
+  void addAnItem(Package package, {int order: 0}) {
+      _listPackageMain.insert(order, package);
+      _listKey.currentState.insertItem(order, duration: Duration(milliseconds: _timeAnimation));
   }
 
   void addItemList(List<Package> listPackage) {
@@ -133,28 +114,18 @@ class _PackageListState extends State<PackageList> {
   }
 
   void _removeAnIten(int position) {
+
+    Package itemToRemove = _listPackageMain.elementAt(position);
+
     _listKey.currentState.removeItem(
       position, 
-      (BuildContext context, Animation<double> animation) => _buildItem(context, position, animation),//{
-        //_buildItem(context, position, animation);
-        //_listPackageMain.removeAt(position);
-      //},
-      duration: const Duration(milliseconds: 500)
+      (BuildContext context, Animation<double> animation) => _buildItem(context, itemToRemove, animation),
+      duration: Duration(milliseconds: _timeAnimation)
     );
+
+    _listPackageMain.removeAt(position);
   }
 
-  void _removeAllItems() {
-    final int itemCount = _listPackageMain.length;
   
-      for (var i = 0; i < itemCount; i++) {
-        //Package itemToRemove = _listPackage.elementAt(0);
-        _listKey.currentState.removeItem(0,
-          (BuildContext context, Animation<double> animation) => _buildItem(context, 0, animation),
-          duration: const Duration(milliseconds: 250),
-        );
-  
-        _listPackageMain.removeAt(0);
-      }
-  }
 
 }

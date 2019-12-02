@@ -91,7 +91,8 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         return new FloatingActionButton(
           tooltip: "Adicionar encomenta",
           child: Icon(Icons.add),
-          onPressed: () => { packageList.deleteUm() }//setState(() {
+          onPressed: () => { packageList.deleteUm() }
+            //setState(() {
             //DialogAddPackage(ctxActionButtom).open( successcallback: _successAddPackage );
           //}),
         );
