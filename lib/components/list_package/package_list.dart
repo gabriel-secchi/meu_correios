@@ -76,20 +76,25 @@ class _PackageListState extends State<PackageList> {
           positionToDelete.add(_listPackageMain.indexOf(item));
         }
 
+        //Ordena decrescente para apagar os registros mais altos da lista
         positionToDelete.sort((b, a) => a.compareTo(b));
-
         for (int pos in positionToDelete) {
           _removeAnIten(pos);
         }
 
+        int count = 0;
         for(Package item in filtrados) {
           //if(_listPackageMain.contains(item))
-          var finder = _listPackageMain.where((i) => item.descricao.contains(i.descricao));
+          var finder = _listPackageMain.where((i) => item.descricao == i.descricao);
           
-          if(finder != null && finder.length > 0)
+          if(finder != null && finder.length > 0) {
+            count++;
             continue;
+          }
 
-          addAnItem(item);
+          addAnItem(item, order: count);
+
+          count++;
         }
         
       });
