@@ -27,7 +27,7 @@ class PackageList extends StatefulWidget  {
   deleteUm() => _packageListState._removeAnIten(0);
 }
 
-class _PackageListState extends State<PackageList> {
+class _PackageListState extends State<PackageList> with AutomaticKeepAliveClientMixin<PackageList> {
   
   final int _timeAnimation = 250;
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
@@ -68,7 +68,7 @@ class _PackageListState extends State<PackageList> {
 
         List<int> positionToDelete = new List();
         for(Package item in _listPackageMain) {
-          var finder = filtrados.where((i) => item.descricao.contains(i.descricao));
+          var finder = filtrados.where((i) => item.descricao == i.descricao);
           
           if(finder != null && finder.length > 0)
             continue;
@@ -76,7 +76,7 @@ class _PackageListState extends State<PackageList> {
           positionToDelete.add(_listPackageMain.indexOf(item));
         }
 
-        //Ordena decrescente para apagar os registros mais altos da lista
+        //Ordena decrescente para apagar os registros mais altos da lista primeiro
         positionToDelete.sort((b, a) => a.compareTo(b));
         for (int pos in positionToDelete) {
           _removeAnIten(pos);
@@ -130,6 +130,10 @@ class _PackageListState extends State<PackageList> {
 
     _listPackageMain.removeAt(position);
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 
   
 

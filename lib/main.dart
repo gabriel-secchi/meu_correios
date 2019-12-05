@@ -36,12 +36,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
 
-  PackageList packageList;
+  PackageList _packageList;
 
   @override
   void initState() {
     super.initState();
-     packageList = new PackageList(packageType: PackageList.PACKAGE_ALL);
+     _packageList = new PackageList(packageType: PackageList.PACKAGE_ALL);
   }
 
   @override
@@ -64,9 +64,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
           
           body: TabBarView(
             children: [
-              //Icon(Icons.directions_car),
-              //PackageList(packageType: PackageList.PACKAGE_ALL),
-              packageList,
+              _packageList,
 
 
               Icon(Icons.directions_car),
@@ -91,9 +89,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
         return new FloatingActionButton(
           tooltip: "Adicionar encomenta",
           child: Icon(Icons.add),
-          onPressed: () => //{ packageList.deleteUm() }
+          onPressed: () =>
             setState(() {
-            DialogAddPackage(ctxActionButtom).open( successcallback: _successAddPackage );
+              DialogAddPackage(ctxActionButtom).open( successcallback: _successAddPackage );
           }),
         );
       },
@@ -103,12 +101,13 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   _onFilterChange(String textFilter) {
     setState(() {
       log(textFilter);
-      packageList.filtrar(textFilter);
+      _packageList.filtrar(textFilter);
     });
   }
 
   _successAddPackage() {
     //TODO: implemetar método
+    //Executar o filtro que acho que vai fun
   }
 
 }
