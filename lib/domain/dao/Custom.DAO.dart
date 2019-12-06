@@ -26,7 +26,7 @@ abstract class CustomDAO<T> {
   Future<List<T>> selectAllRows() async {
     Database db = await DBHelper.getInstance.database;
     List<Map<String, dynamic>> rowList = await db.query(getTableName());
-    return await rowListToListObject(rowList);
+    return rowListToListObject(rowList);
   }
 
   List<T> rowListToListObject(List<Map<String, dynamic>> rowList) {

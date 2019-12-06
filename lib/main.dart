@@ -37,6 +37,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
 
   PackageList _packageList;
+  String _textFilter;
 
   @override
   void initState() {
@@ -100,14 +101,11 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
   _onFilterChange(String textFilter) {
     setState(() {
-      log(textFilter);
+      _textFilter = textFilter;
       _packageList.filtrar(textFilter);
     });
   }
 
-  _successAddPackage() {
-    //TODO: implemetar método
-    //Executar o filtro que acho que vai fun
-  }
+  _successAddPackage() => _onFilterChange(_textFilter);
 
 }

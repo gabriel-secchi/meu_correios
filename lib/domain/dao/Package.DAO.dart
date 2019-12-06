@@ -1,7 +1,9 @@
 
 import 'package:meu_correios/domain/dao/Custom.DAO.dart';
 import 'package:meu_correios/domain/dao/Historic.DAO.dart';
+import 'package:meu_correios/domain/database/DBHelper.dart';
 import 'package:meu_correios/domain/models/Package.dart';
+import 'package:sqflite/sqflite.dart';
 
 class PackageDAO extends CustomDAO<Package> {
   final String _table = "Package";
@@ -32,6 +34,17 @@ class PackageDAO extends CustomDAO<Package> {
       'descricao': obj.descricao,
       'servico': obj.servico,
     };
+  }
+
+  @override
+  Future<List<Package>> selectAllRows() async {
+    Database db = await DBHelper.getInstance.database;
+    List<Map<String, dynamic>> rowList = await db.query(
+      getTableName(),
+      orderBy: 'descricao ASC'
+    );
+
+    return rowListToListObject(rowList);
   }
 
 }
