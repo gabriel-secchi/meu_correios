@@ -24,8 +24,8 @@ class PackageList extends StatefulWidget {
   deleteUm() => _packageListState._removeAnIten(0);
 }
 
-class _PackageListState extends State<PackageList>
-    with AutomaticKeepAliveClientMixin<PackageList> {
+class _PackageListState extends State<PackageList> with AutomaticKeepAliveClientMixin<PackageList> 
+{
   @override
   bool get wantKeepAlive => true;
 
@@ -58,10 +58,8 @@ class _PackageListState extends State<PackageList>
     );
   }
 
-  void filtrar(String texto) {
-    PackageDAO.getInstance().selectAllRows().then((listPackage) {
-      List<Package> filtrados =
-          listPackage.where((i) => i.descricao.contains(texto)).toList();
+  void filtrar(String textFilter) {
+    PackageDAO.getInstance().selectAllContains(textFilter).then((filtrados) {
 
       List<int> positionToDelete = new List();
       for (Package item in _listPackageMain) {
@@ -78,19 +76,6 @@ class _PackageListState extends State<PackageList>
         _removeAnIten(pos);
       }
 
-      /* int count = 0;
-      for (Package item in filtrados) 
-      {
-        var finder = _listPackageMain.where((i) => item.descricao == i.descricao);
-
-        if (finder != null && finder.length > 0) {
-          count++;
-          continue;
-        }
-
-        addAnItem(item, order: count);
-        count++;
-      } */
       addItemList(filtrados);
     });
   }
@@ -101,11 +86,8 @@ class _PackageListState extends State<PackageList>
         .insertItem(order, duration: Duration(milliseconds: _timeAnimation));
   }
 
-  void addItemList(List<Package> listPackage) {
-    // for (Package package in listPackage) {
-    //   addAnItem(package);
-    // }
-
+  void addItemList(List<Package> listPackage) 
+  {
     int count = 0;
     for (Package item in listPackage) 
     {
