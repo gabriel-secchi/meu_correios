@@ -1,12 +1,7 @@
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:meu_correios/components/addPackage.dart';
 import 'package:meu_correios/components/app_bar_component.dart';
 import 'package:meu_correios/components/list_package/package_list.dart';
-import 'package:meu_correios/domain/dao/Package.DAO.dart';
-import 'package:meu_correios/domain/models/Package.dart';
 
 void main() => runApp(MyApp());
 
