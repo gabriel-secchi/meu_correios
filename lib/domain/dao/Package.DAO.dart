@@ -46,6 +46,16 @@ class PackageDAO extends CustomDAO<Package> {
     return rowListToListObject(rowList);
   }
 
+  Future<Package> selectByCode(String codigo) async {
+    Database db = await DBHelper.getInstance.database;
+    var resultQuery = await db.query(
+      getTableName(), 
+      where: "codigo = ?",
+      whereArgs: [codigo]);
+
+    return resultQuery.isNotEmpty ? fromMappedJson(resultQuery.first) : null;
+  }
+
   Future<List<Package>> selectAllContains(String filter) async 
   {
     if(filter == null)

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:meu_correios/domain/models/Historic.dart';
 
 class Package {

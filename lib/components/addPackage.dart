@@ -71,11 +71,18 @@ class DialogAddPackage {
   }
 
   _trackAndSavePackage() {
-    Rastreio(this._context).rastrearUm(
-        this._addPackage.codigo,
-        _onSuccessTracking
-      )
-      .catchError((error) => CustomSnackBar.showError(this._context, error) );
+    PackageDAO.getInstance().selectByCode(this._addPackage.codigo).then((package) {
+      if(package == null) {
+        Rastreio(this._context).rastrearUm(
+          this._addPackage.codigo,
+          _onSuccessTracking
+        )
+        .catchError((error) => CustomSnackBar.showError(this._context, error) );
+      }
+      else {
+        CustomSnackBar.showError(this._context, "Código de rastreio já cadastrado");
+      }
+    });
   }
 
   _onSuccessTracking(Package objTracking) async {
