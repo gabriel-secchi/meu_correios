@@ -1,3 +1,4 @@
+import 'package:meu_correios/domain/database/DBConsts.dart';
 import 'package:meu_correios/domain/database/migrations/Migration.dart';
 import 'package:sqflite/sqlite_api.dart';
 
@@ -11,13 +12,14 @@ class CreateTableHistoric extends Migration {
 
   @override
   run(DatabaseExecutor tnx) async {
-    String sql = "CREATE TABLE Historic ( "+
-        "codPackage TEXT NOT NULL, " +
-        "detalhes TEXT NULL, " +
-        "local TEXT NULL, "+
-        "data INT NOT NULL, "+
-        "situacao TEXT NULL"+
-      ")";
+    String sql = 
+    "CREATE TABLE ${DBConsts.TBL_HISTORIC} ( " +
+    "   ${DBConsts.CODE_PACKAGE} TEXT NOT NULL, " +
+    "   ${DBConsts.DETAILS} TEXT NULL, " +
+    "   ${DBConsts.LOCATION} TEXT NULL, " +
+    "   ${DBConsts.DATE} INT NOT NULL, " +
+    "   ${DBConsts.SITUATION} TEXT NULL " +
+    ")";
 
     await tnx.execute( sql );
   }

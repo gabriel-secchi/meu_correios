@@ -1,5 +1,6 @@
 
 
+import 'package:meu_correios/domain/database/DBConsts.dart';
 import 'package:meu_correios/domain/database/migrations/Migration.dart';
 import 'package:sqflite/sqlite_api.dart';
 
@@ -12,8 +13,16 @@ class CreateTablePackage extends Migration {
   }
 
   @override
-  run(DatabaseExecutor tnx) async {
-    String sql = "CREATE TABLE Package (codigo TEXT NOT NULL, descricao TEXT NOT NULL, servico TEXT NULL)";
+  run(DatabaseExecutor tnx) async 
+  {
+    String sql = 
+    "CREATE TABLE ${DBConsts.TBL_PACKAGE} ( " +
+    "   ${DBConsts.CODE} TEXT NOT NULL, " +
+    "   ${DBConsts.DESCRIPTION} TEXT NOT NULL, " +
+    "   ${DBConsts.SERVICE} TEXT NULL, " +
+    "   ${DBConsts.STATUS} INT NULL, " +
+    "   ${DBConsts.FILED} INT DAFAULT 0 " +
+    ")";
     await tnx.execute( sql );
   }  
     

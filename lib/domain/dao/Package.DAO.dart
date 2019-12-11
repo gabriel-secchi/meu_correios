@@ -1,11 +1,12 @@
 import 'package:meu_correios/domain/dao/Custom.DAO.dart';
 import 'package:meu_correios/domain/dao/Historic.DAO.dart';
+import 'package:meu_correios/domain/database/DBConsts.dart';
 import 'package:meu_correios/domain/database/DBHelper.dart';
 import 'package:meu_correios/domain/models/Package.dart';
 import 'package:sqflite/sqflite.dart';
 
 class PackageDAO extends CustomDAO<Package> {
-  final String _table = "Package";
+  final String _table = DBConsts.TBL_PACKAGE;
 
   String getTableName() {
     return this._table;
@@ -18,12 +19,12 @@ class PackageDAO extends CustomDAO<Package> {
   @override
   Package fromMappedJson(Map<String, dynamic> objJson) {
     Package package = new Package(
-        codigo: objJson['codigo'],
-        descricao: objJson['descricao'],
-        servico: objJson['servico'],
+        codigo: objJson[DBConsts.CODE],
+        descricao: objJson[DBConsts.DESCRIPTION],
+        servico: objJson[DBConsts.SERVICE],
         historico: HistoricDAO.getInstance().fromListMappedJson(
-            objJson['historico'],
-            codPackage: objJson['codigo']));
+            objJson[DBConsts.HISTORICO],
+            codPackage: objJson[DBConsts.CODE]));
     return package;
   }
 
