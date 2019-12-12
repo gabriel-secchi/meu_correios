@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meu_correios/domain/dao/Historic.DAO.dart';
-import 'package:meu_correios/domain/dao/Package.DAO.dart';
+import 'package:meu_correios/domain/dao/Historico.DAO.dart';
+import 'package:meu_correios/domain/dao/Pacote.DAO.dart';
 import 'package:meu_correios/domain/models/Package.dart';
 import 'package:meu_correios/services/customSnackBar.dart';
 import 'package:meu_correios/services/rastreio.dart';
@@ -71,7 +71,7 @@ class DialogAddPackage {
   }
 
   _trackAndSavePackage() {
-    PackageDAO.getInstance().selectByCode(this._addPackage.codigo).then((package) {
+    PacoteDAO.getInstance().selectByCode(this._addPackage.codigo).then((package) {
       if(package == null) {
         Rastreio(this._context).rastrearUm(
           this._addPackage.codigo,
@@ -95,8 +95,8 @@ class DialogAddPackage {
   }
 
   _saveTrackedPackage() {
-    PackageDAO.getInstance().insert(this._addPackage);
-    HistoricDAO.getInstance().insertList(this._addPackage.historico);
+    PacoteDAO.getInstance().inserir(this._addPackage);
+    HistoricoDAO.getInstance().inserirLista(this._addPackage.historico);
     CustomSnackBar.showSuccess(this._context, "Pacote adicionado com sucesso");
   }
   

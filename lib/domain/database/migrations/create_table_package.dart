@@ -16,12 +16,12 @@ class CreateTablePackage extends Migration {
   run(DatabaseExecutor tnx) async 
   {
     String sql = 
-    "CREATE TABLE ${DBConsts.TBL_PACKAGE} ( " +
-    "   ${DBConsts.CODE} TEXT NOT NULL, " +
-    "   ${DBConsts.DESCRIPTION} TEXT NOT NULL, " +
-    "   ${DBConsts.SERVICE} TEXT NULL, " +
+    "CREATE TABLE ${DBConsts.TBL_PACOTE} ( " +
+    "   ${DBConsts.CODIGO} TEXT NOT NULL, " +
+    "   ${DBConsts.DESCRICAO} TEXT NOT NULL, " +
+    "   ${DBConsts.SERVICO} TEXT NULL, " +
     "   ${DBConsts.STATUS} INT NULL, " +
-    "   ${DBConsts.FILED} INT DAFAULT 0 " +
+    "   ${DBConsts.ARQUIVADO} INT DAFAULT 0 " +
     ")";
     await tnx.execute( sql );
   }  

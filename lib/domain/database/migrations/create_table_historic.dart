@@ -13,12 +13,12 @@ class CreateTableHistoric extends Migration {
   @override
   run(DatabaseExecutor tnx) async {
     String sql = 
-    "CREATE TABLE ${DBConsts.TBL_HISTORIC} ( " +
-    "   ${DBConsts.CODE_PACKAGE} TEXT NOT NULL, " +
-    "   ${DBConsts.DETAILS} TEXT NULL, " +
-    "   ${DBConsts.LOCATION} TEXT NULL, " +
-    "   ${DBConsts.DATE} INT NOT NULL, " +
-    "   ${DBConsts.SITUATION} TEXT NULL " +
+    "CREATE TABLE ${DBConsts.TBL_HISTORICO} ( " +
+    "   ${DBConsts.COD_PACOTE} TEXT NOT NULL, " +
+    "   ${DBConsts.DETALHES} TEXT NULL, " +
+    "   ${DBConsts.LOCAL} TEXT NULL, " +
+    "   ${DBConsts.DATA} INT NOT NULL, " +
+    "   ${DBConsts.SITUACAO} TEXT NULL " +
     ")";
 
     await tnx.execute( sql );

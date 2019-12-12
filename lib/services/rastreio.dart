@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:meu_correios/domain/models/Package.dart';
-import 'package:meu_correios/domain/dao/Package.DAO.dart';
+import 'package:meu_correios/domain/dao/Pacote.DAO.dart';
 import 'package:meu_correios/services/customLoading.dart';
 
 class Rastreio {
@@ -22,12 +22,12 @@ class Rastreio {
 
       if (response.statusCode == 200) { 
         var objResponse = json.decode(response.body);
-        Package objTracking = PackageDAO.getInstance().fromMappedJson(objResponse);
+        Package objTracking = PacoteDAO.getInstance().mapeiaJsonParaObjeto(objResponse);
         await onSuccessTracking(objTracking);
         return true;
       }
 
-      throw("no find object");
+      throw("Objeto não encontrado");
     }
     catch(error) {
       throw("Código de rastreio não localizado");

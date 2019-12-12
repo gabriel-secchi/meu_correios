@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meu_correios/components/list_package/card_item_package.dart';
 import 'package:meu_correios/components/list_package/packageAnimatedList.dart';
-import 'package:meu_correios/domain/dao/Package.DAO.dart';
-import 'package:meu_correios/domain/models/Package.dart';
 
 class PackageList extends StatefulWidget {
   static int PACKAGE_ALL = 1;

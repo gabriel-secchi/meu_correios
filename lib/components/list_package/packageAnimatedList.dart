@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meu_correios/components/list_package/baseAnimatedList.dart';
 import 'package:meu_correios/components/list_package/card_item_package.dart';
-import 'package:meu_correios/domain/dao/Package.DAO.dart';
+import 'package:meu_correios/domain/dao/Pacote.DAO.dart';
 import 'package:meu_correios/domain/models/Package.dart';
 
 class PackageAnimatedList extends BaseAnimatedList<Package> {
@@ -17,14 +17,14 @@ class PackageAnimatedList extends BaseAnimatedList<Package> {
   }
 
   void filtrar(String textFilter) {
-    PackageDAO.getInstance()
-      .selectAllContains(textFilter)
+    PacoteDAO.getInstance()
+      .obterTodosPeloFiltro(textFilter)
       .then((filtrados) => rebuildListItems(filtrados));
   }
 
   void loadItens() {
-    PackageDAO.getInstance()
-      .selectAllRows()
+    PacoteDAO.getInstance()
+      .obterTodos()
       .then((listPackage) => addItemList(listPackage));
   }
   
