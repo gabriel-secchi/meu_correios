@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:meu_correios/domain/models/Package.dart';
+import 'package:meu_correios/domain/models/Pacote.dart';
 import 'package:meu_correios/domain/dao/Pacote.DAO.dart';
 import 'package:meu_correios/services/customLoading.dart';
 
@@ -22,7 +22,7 @@ class Rastreio {
 
       if (response.statusCode == 200) { 
         var objResponse = json.decode(response.body);
-        Package objTracking = PacoteDAO.getInstance().mapeiaJsonParaObjeto(objResponse);
+        Pacote objTracking = PacoteDAO.getInstance().mapeiaJsonParaObjeto(objResponse);
         await onSuccessTracking(objTracking);
         return true;
       }

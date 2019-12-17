@@ -2,10 +2,10 @@ import 'package:meu_correios/domain/dao/Custom.DAO.dart';
 import 'package:meu_correios/domain/dao/Historico.DAO.dart';
 import 'package:meu_correios/domain/database/DBConsts.dart';
 import 'package:meu_correios/domain/database/DBHelper.dart';
-import 'package:meu_correios/domain/models/Package.dart';
+import 'package:meu_correios/domain/models/Pacote.dart';
 import 'package:sqflite/sqflite.dart';
 
-class PacoteDAO extends CustomDAO<Package> {
+class PacoteDAO extends CustomDAO<Pacote> {
   final String _table = DBConsts.TBL_PACOTE;
 
   String obterNomeTabela() {
@@ -17,8 +17,8 @@ class PacoteDAO extends CustomDAO<Package> {
   }
 
   @override
-  Package mapeiaJsonParaObjeto(Map<String, dynamic> objJson) {
-    Package package = new Package(
+  Pacote mapeiaJsonParaObjeto(Map<String, dynamic> objJson) {
+    Pacote package = new Pacote(
         codigo: objJson[DBConsts.CODIGO],
         descricao: objJson[DBConsts.DESCRICAO],
         servico: objJson[DBConsts.SERVICO],
@@ -29,7 +29,7 @@ class PacoteDAO extends CustomDAO<Package> {
   }
 
   @override
-  Map<String, dynamic> toMap(Package obj) {
+  Map<String, dynamic> toMap(Pacote obj) {
     return {
       DBConsts.CODIGO: obj.codigo,
       DBConsts.DESCRICAO: obj.descricao,
@@ -38,7 +38,7 @@ class PacoteDAO extends CustomDAO<Package> {
   }
 
   @override
-  Future<List<Package>> obterTodos() async {
+  Future<List<Pacote>> obterTodos() async {
     Database db = await DBHelper.getInstance.database;
     List<Map<String, dynamic>> rowList = await db.query(
       obterNomeTabela(), 
@@ -47,7 +47,7 @@ class PacoteDAO extends CustomDAO<Package> {
     return mapeiaListaJsonParaListaObj(rowList);
   }
 
-  Future<Package> selectByCode(String codigo) async {
+  Future<Pacote> selectByCode(String codigo) async {
     Database db = await DBHelper.getInstance.database;
     var resultQuery = await db.query(
       obterNomeTabela(), 
@@ -57,7 +57,7 @@ class PacoteDAO extends CustomDAO<Package> {
     return resultQuery.isNotEmpty ? mapeiaJsonParaObjeto(resultQuery.first) : null;
   }
 
-  Future<List<Package>> obterTodosPeloFiltro(String filtro) async 
+  Future<List<Pacote>> obterTodosPeloFiltro(String filtro) async 
   {
     if(filtro == null)
       filtro = "";

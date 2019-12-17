@@ -3,11 +3,11 @@ import 'package:intl/intl.dart';
 import 'package:meu_correios/domain/dao/Custom.DAO.dart';
 import 'package:meu_correios/domain/database/DBConsts.dart';
 import 'package:meu_correios/domain/database/DBHelper.dart';
-import 'package:meu_correios/domain/models/Historic.dart';
-import 'package:meu_correios/domain/models/Package.dart';
+import 'package:meu_correios/domain/models/Historico.dart';
+import 'package:meu_correios/domain/models/Pacote.dart';
 import 'package:sqflite/sqflite.dart';
 
-class HistoricoDAO extends CustomDAO<Historic> {
+class HistoricoDAO extends CustomDAO<Historico> {
   final String _tabela = DBConsts.TBL_HISTORICO;
 
   String obterNomeTabela() {
@@ -19,7 +19,7 @@ class HistoricoDAO extends CustomDAO<Historic> {
   }
 
   @override
-  Historic mapeiaJsonParaObjeto(Map<String, dynamic> objJson) {
+  Historico mapeiaJsonParaObjeto(Map<String, dynamic> objJson) {
 
     String _dataStr = objJson[DBConsts.DATA];
     DateTime _data = DateTime.now();
@@ -30,8 +30,8 @@ class HistoricoDAO extends CustomDAO<Historic> {
         _data = new DateFormat(DBConsts.FORMATO_DATA_DB).parse(_dataStr);
     }
 
-    Historic _pacote = new Historic(
-      codPackage: objJson[DBConsts.COD_PACOTE],
+    Historico _pacote = new Historico(
+      codPacote: objJson[DBConsts.COD_PACOTE],
       detalhes: objJson[DBConsts.DETALHES],
       local: objJson[DBConsts.LOCAL],
       data: _data,
@@ -41,15 +41,15 @@ class HistoricoDAO extends CustomDAO<Historic> {
     return _pacote;
   }
 
-  List<Historic> mapeiaListaJsonParaListaHistorico(List<dynamic> listMapJson, {String codPackage = null}) {
-    List<Historic> objList = new List();
+  List<Historico> mapeiaListaJsonParaListaHistorico(List<dynamic> listMapJson, {String codPackage = null}) {
+    List<Historico> objList = new List();
     if(listMapJson == null)
       return objList;
 
     for(Map<String, dynamic> dynamicObj in listMapJson) {
-      Historic obj = mapeiaJsonParaObjeto(dynamicObj);
+      Historico obj = mapeiaJsonParaObjeto(dynamicObj);
       if(codPackage != null)
-        obj.codPackage = codPackage;
+        obj.codPacote = codPackage;
 
       objList.add( obj );
     }
@@ -57,9 +57,9 @@ class HistoricoDAO extends CustomDAO<Historic> {
   }
 
   @override
-  Map<String, dynamic> toMap(Historic obj) {
+  Map<String, dynamic> toMap(Historico obj) {
      return {
-      DBConsts.COD_PACOTE: obj.codPackage,
+      DBConsts.COD_PACOTE: obj.codPacote,
       DBConsts.DETALHES: obj.detalhes,
       DBConsts.LOCAL: obj.local,
       DBConsts.DATA: new DateFormat(DBConsts.FORMATO_DATA_DB).format(obj.data),
@@ -67,7 +67,7 @@ class HistoricoDAO extends CustomDAO<Historic> {
     };
   }
 
-  Future<List<Historic>> listarTodosDoPacote(String codPacote) async {
+  Future<List<Historico>> listarTodosDoPacote(String codPacote) async {
     Database db = await DBHelper.getInstance.database;
     List<Map<String, dynamic>> rowList = await db.query(
       obterNomeTabela(),
@@ -88,9 +88,9 @@ class HistoricoDAO extends CustomDAO<Historic> {
     );
   }
 
-  inserirNoPacote(List<Historic> listaObj, Package pacote) async {
-    for(Historic obj in listaObj) {
-      obj.codPackage = pacote.codigo;
+  inserirNoPacote(List<Historico> listaObj, Pacote pacote) async {
+    for(Historico obj in listaObj) {
+      obj.codPacote = pacote.codigo;
       this.inserir(obj);
     }
   }

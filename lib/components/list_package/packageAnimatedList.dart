@@ -2,30 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:meu_correios/components/list_package/baseAnimatedList.dart';
 import 'package:meu_correios/components/list_package/card_item_package.dart';
 import 'package:meu_correios/domain/dao/Pacote.DAO.dart';
-import 'package:meu_correios/domain/models/Package.dart';
+import 'package:meu_correios/domain/models/Pacote.dart';
 
-class PackageAnimatedList extends BaseAnimatedList<Package> {
+class PackageAnimatedList extends BaseAnimatedList<Pacote> {
   
   @override
-  Widget buildCardItem(Package item) {
-    return new CardItemPackage(package: item);
+  Widget buildCardItem(Pacote item) {
+    return new CardItemPackage(pacote: item);
   }
 
   @override
-  Iterable<Package> itemContains(List<Package> listItem, Package item) {
-    return listItem.where((i) => item.descricao == i.descricao);
+  Iterable<Pacote> itemContains(List<Pacote> listaPacotes, Pacote pacote) {
+    return listaPacotes.where((i) => pacote.descricao == i.descricao);
   }
 
-  void filtrar(String textFilter) {
+  void filtrar(String strFiltro) {
     PacoteDAO.getInstance()
-      .obterTodosPeloFiltro(textFilter)
-      .then((filtrados) => rebuildListItems(filtrados));
+      .obterTodosPeloFiltro(strFiltro)
+      .then((pacotesFiltrados) => rebuildListItems(pacotesFiltrados));
   }
 
   void loadItens() {
     PacoteDAO.getInstance()
       .obterTodos()
-      .then((listPackage) => addItemList(listPackage));
+      .then((listaPacotes) => addItemList(listaPacotes));
   }
   
 }

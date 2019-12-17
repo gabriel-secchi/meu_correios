@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:meu_correios/domain/dao/Historico.DAO.dart';
 import 'package:meu_correios/domain/dao/Pacote.DAO.dart';
-import 'package:meu_correios/domain/models/Package.dart';
+import 'package:meu_correios/domain/models/Pacote.dart';
 import 'package:meu_correios/services/customSnackBar.dart';
 import 'package:meu_correios/services/rastreio.dart';
 
 class DialogAddPackage {
 
   BuildContext _context;
-  Package _addPackage;
+  Pacote _addPackage;
   var _successCallback;
 
   DialogAddPackage(this._context);
@@ -55,7 +55,7 @@ class DialogAddPackage {
               onPressed: () {
                 Navigator.of(contextDialog).pop();
 
-                this._addPackage = Package(
+                this._addPackage = Pacote(
                     descricao: _tfDescricaoController.text,
                     codigo: _tfCodigoController.text
                 );
@@ -85,7 +85,7 @@ class DialogAddPackage {
     });
   }
 
-  _onSuccessTracking(Package objTracking) async {
+  _onSuccessTracking(Pacote objTracking) async {
     objTracking.descricao = this._addPackage.descricao;
     this._addPackage = objTracking;
     this._saveTrackedPackage();
