@@ -88,6 +88,7 @@ class DialogAddPackage {
   _onSuccessTracking(Pacote objTracking) async {
     objTracking.descricao = this._addPackage.descricao;
     this._addPackage = objTracking;
+
     this._saveTrackedPackage();
 
     if(this._successCallback  != false)

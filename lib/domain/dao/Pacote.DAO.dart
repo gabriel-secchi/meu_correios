@@ -22,6 +22,8 @@ class PacoteDAO extends CustomDAO<Pacote> {
         codigo: objJson[DBConsts.CODIGO],
         descricao: objJson[DBConsts.DESCRICAO],
         servico: objJson[DBConsts.SERVICO],
+        status: objJson[DBConsts.STATUS],
+        arquivado: objJson[DBConsts.ARQUIVADO],
         historico: HistoricoDAO.getInstance().mapeiaListaJsonParaListaHistorico(
             objJson[DBConsts.HISTORICO],
             codPackage: objJson[DBConsts.CODIGO]));
@@ -34,6 +36,8 @@ class PacoteDAO extends CustomDAO<Pacote> {
       DBConsts.CODIGO: obj.codigo,
       DBConsts.DESCRICAO: obj.descricao,
       DBConsts.SERVICO: obj.servico,
+      DBConsts.STATUS: obj.status,
+      DBConsts.ARQUIVADO: obj.arquivado
     };
   }
 

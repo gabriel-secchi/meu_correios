@@ -1,5 +1,6 @@
 
 import 'package:intl/intl.dart';
+import 'package:meu_correios/Consts.dart';
 import 'package:meu_correios/domain/dao/Custom.DAO.dart';
 import 'package:meu_correios/domain/database/DBConsts.dart';
 import 'package:meu_correios/domain/database/DBHelper.dart';
@@ -95,4 +96,14 @@ class HistoricoDAO extends CustomDAO<Historico> {
     }
   }
 
+  obterStatus(List<Historico> listaObj) {
+    if( listaObj == null || listaObj.length == 0 )
+      return Consts.PACOTE_AGUARDANDO_POSTAGEM;
+    
+    bool isEntregue = listaObj.any((i) => i.situacao == "Objeto entregue ao destinatário");
+    if(isEntregue)
+      return Consts.PACOTE_ENTREGUE;
+
+    return Consts.PACOTE_EM_TRANSPORTE;
+  }
 }

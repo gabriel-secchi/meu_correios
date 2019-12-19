@@ -7,7 +7,7 @@ class DBConsts {
   static final String DESCRICAO = "descricao";
   static final String SERVICO = "servico";
   static final String STATUS = "status";
-  static final String ARQUIVADO = "arquivada";
+  static final String ARQUIVADO = "arquivado";
 
   static final String COD_PACOTE = "codPacote";
   static final String DETALHES = "detalhes";
