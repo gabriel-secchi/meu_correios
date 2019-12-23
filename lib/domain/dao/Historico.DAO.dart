@@ -31,7 +31,7 @@ class HistoricoDAO extends CustomDAO<Historico> {
         _data = new DateFormat(DBConsts.FORMATO_DATA_DB).parse(_dataStr);
     }
 
-    Historico _pacote = new Historico(
+    Historico _historico = new Historico(
       codPacote: objJson[DBConsts.COD_PACOTE],
       detalhes: objJson[DBConsts.DETALHES],
       local: objJson[DBConsts.LOCAL],
@@ -39,7 +39,7 @@ class HistoricoDAO extends CustomDAO<Historico> {
       situacao: objJson[DBConsts.SITUACAO],
     );
 
-    return _pacote;
+    return _historico;
   }
 
   List<Historico> mapeiaListaJsonParaListaHistorico(List<dynamic> listMapJson, {String codPackage = null}) {

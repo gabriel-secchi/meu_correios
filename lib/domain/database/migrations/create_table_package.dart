@@ -21,7 +21,7 @@ class CreateTablePackage extends Migration {
     "   ${DBConsts.DESCRICAO} TEXT NOT NULL, " +
     "   ${DBConsts.SERVICO} TEXT NULL, " +
     "   ${DBConsts.STATUS} INT NULL, " +
-    "   ${DBConsts.ARQUIVADO} INT DAFAULT 0 " +
+    "   ${DBConsts.ARQUIVADO} INT DEFAULT 0 " +
     ")";
     await tnx.execute( sql );
   }  

@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-     _packageList = new PackageList(packageType: PackageList.PACKAGE_ALL);
+     _packageList = new PackageList(packageType: PackageList.TODOS_PACOTES);
   }
 
   @override

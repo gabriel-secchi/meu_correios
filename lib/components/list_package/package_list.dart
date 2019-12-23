@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:meu_correios/components/list_package/packageAnimatedList.dart';
 
 class PackageList extends StatefulWidget {
-  static int PACKAGE_ALL = 1;
-  static int PACKAGE_ON_CARRIAGE = 2;
-  static int PACKAGE_DELIVERED = 3;
+  static int TODOS_PACOTES = 1;
+  static int PACOTES_EM_TRANSPORTE = 2;
+  static int PACOTES_ENTREGUES = 3;
 
   int packageType;
 
